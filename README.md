@@ -35,7 +35,7 @@ rsync -avz --progress <path/to/dataset.zip> <username>@<gpu_server>:<path/to/dir
 ```bash
 unzip <dataset.zip> -d <path/to/directory/where/you/want/to/unzip>
 ```
-##BaseLine Segmentation Model
+## BaseLine Segmentation Model
 We initially employed the U-Net architecture to establish baseline performance metrics on the laparoscopic dataset. Although the model delivered solid results, we observed considerable slowdowns during training—even when utilizing GPU3. These performance bottlenecks led us to explore more efficient alternatives, ultimately prompting a switch to YOLOv11, a newer and more optimized model. Given its recent release, we consulted the official Ultralytics YOLOv11 documentation to ensure our dataset was formatted correctly for compatibility to the model.
 
 ## Diffusion model for Synthetic image generation
