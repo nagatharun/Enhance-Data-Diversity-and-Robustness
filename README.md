@@ -1,4 +1,4 @@
-# Capstone Project: AI-Based Multi-Organ Prediction in Laparoscopic Videos
+# Capstone Enhance Data Diversity and Robustness for Multi-Organ Prediction during Da Vinci-Generated Videos
 
 ## Overview
 This capstone project focuses on improving the robustness and generalizability of AI-based multi-organ prediction in Da Vinci-generated laparoscopic videos. The goal is to leverage domain adaptation techniques and generative models (such as GANs or diffusion models) to synthesize new laparoscopic images, thereby expanding and diversifying available datasets. This project aims to produce an AI pipeline that is more resilient to real-world surgical variations and data scarcity by addressing the variability in patient anatomies, procedures, and lighting conditions.
