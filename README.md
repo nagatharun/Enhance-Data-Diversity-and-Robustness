@@ -22,7 +22,11 @@ The success of the project will be measured based on the following criteria:
 We have downloaded the Cholecseg8k dataset from Kaggle for initial testing:
 - [Cholecseg8k Dataset](https://www.kaggle.com/datasets/newslab/cholecseg8k)
 
-### Data Upload
+## GPU Access
+Access to the GPU for training and experimentation has been set up using the following guide:
+- [Lab GPU Server Setup](https://github.com/SLUVisLab/lab-wiki/wiki/%F0%9F%93%9F-Lab-GPU-Server-Setup)
+
+## Data Upload
 1. We have uploaded the dataset(.zip) to the GPU server, use the following generic `rsync` command format:
 ```bash
 rsync -avz --progress <path/to/dataset.zip> <username>@<gpu_server>:<path/to/directory/where/you/want/to/upload>
