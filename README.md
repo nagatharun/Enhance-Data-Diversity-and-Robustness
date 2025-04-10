@@ -1,7 +1,7 @@
 # Capstone Project: AI-Based Multi-Organ Prediction in Laparoscopic Videos
 
 ## Overview
-This capstone project focuses on improving the robustness and generalizability of AI-based multi-organ prediction in Da Vinci-generated laparoscopic videos. The goal is to leverage domain adaptation techniques and generative models (such as GANs or diffusion models) to synthesize new laparoscopic images, thereby expanding and diversifying available datasets. By addressing the variability in patient anatomies, procedures, and lighting conditions, this project aims to produce an AI pipeline that is more resilient to real-world surgical variations and data scarcity.
+This capstone project focuses on improving the robustness and generalizability of AI-based multi-organ prediction in Da Vinci-generated laparoscopic videos. The goal is to leverage domain adaptation techniques and generative models (such as GANs or diffusion models) to synthesize new laparoscopic images, thereby expanding and diversifying available datasets. This project aims to produce an AI pipeline that is more resilient to real-world surgical variations and data scarcity by addressing the variability in patient anatomies, procedures, and lighting conditions.
 
 ## Objectives
 - Implement domain adaptation techniques to handle variability in laparoscopic imagery across different patients, procedures, and lighting conditions.
@@ -27,11 +27,19 @@ Access to the GPU for training and experimentation has been set up using the fol
 - [Lab GPU Server Setup](https://github.com/SLUVisLab/lab-wiki/wiki/%F0%9F%93%9F-Lab-GPU-Server-Setup)
 
 ## Data Upload
-1. We have uploaded the dataset(.zip) to the GPU server, use the following generic `rsync` command format:
+1. We have uploaded the dataset(.zip) to the GPU server. Use the following generic `rsync` command format:
 ```bash
 rsync -avz --progress <path/to/dataset.zip> <username>@<gpu_server>:<path/to/directory/where/you/want/to/upload>
 ```
 2. After uploading, the dataset can be unzipped on the server using:
 ```bash
-unzip <dataset.zip> -d <directory where you want to unzip>
+unzip <dataset.zip> -d <path/to/directory/where/you/want/to/unzip>
 ```
+
+## Diffusion model for Synthetic image generation
+We used the [SyntheticImageGeneration repository](https://github.com/SimeonAllmendinger/SyntheticImageGeneration) to generate synthetic laparoscopic images using pre-trained and custom diffusion models. These synthetic frames enhance training data diversity and improve downstream model generalization.
+
+### Augmentation Workflow
+  - Synthetic frames were generated using the model and scripts provided in the repository.
+
+
