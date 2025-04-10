@@ -39,7 +39,9 @@ unzip <dataset.zip> -d <path/to/directory/where/you/want/to/unzip>
 We initially employed the U-Net architecture to establish baseline performance metrics on the laparoscopic dataset. Although the model delivered solid results, we observed considerable slowdowns during training—even when utilizing GPU3. These performance bottlenecks led us to explore more efficient alternatives, ultimately prompting a switch to YOLOv11, a newer and more optimized model. Given its recent release, we consulted the official Ultralytics YOLOv11 documentation to ensure our dataset was formatted correctly for compatibility to the model.
 
 ## Diffusion model for Synthetic image generation
-We used the [SyntheticImageGeneration repository](https://github.com/SimeonAllmendinger/SyntheticImageGeneration) to generate synthetic laparoscopic images using pre-trained and custom diffusion models. These synthetic frames enhance training data diversity and improve downstream model generalization.
+  - We used the [SyntheticImageGeneration repository](https://github.com/SimeonAllmendinger/SyntheticImageGeneration) to generate synthetic laparoscopic images using pre-trained and custom diffusion models. These synthetic frames enhance training data diversity and improve downstream model generalization.
+  - This implementation is based on the research paper
+      - [Synthetic Image Generation with Score-Based Diffusion Models](https://arxiv.org/pdf/2312.03043)
 
 ### Augmentation Workflow
   - Synthetic frames were generated using the model and scripts provided in the repository.
