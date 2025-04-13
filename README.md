@@ -1,49 +1,153 @@
-# Enhance Data Diversity and Robustness for Multi-Organ Prediction during Da Vinci-Generated Videos
+<link href="./docs/style.css" rel="stylesheet"/>
 
-## Overview
-This capstone project focuses on improving the robustness and generalizability of AI-based multi-organ prediction in Da Vinci-generated laparoscopic videos. The goal is to leverage domain adaptation techniques and generative models (such as GANs or diffusion models) to synthesize new laparoscopic images, thereby expanding and diversifying available datasets. This project aims to produce an AI pipeline that is more resilient to real-world surgical variations and data scarcity by addressing the variability in patient anatomies, procedures, and lighting conditions.
+# About the generation of synthetic laparascopic images using diffusion-based models
 
-## Objectives
-- Implement domain adaptation techniques to handle variability in laparoscopic imagery across different patients, procedures, and lighting conditions.
-- Use generative models (e.g., GANs, diffusion models) to synthesize new laparoscopic images for augmenting real datasets that are limited or imbalanced.
-- Integrate synthetic data into a multi-organ prediction workflow to ensure improved model robustness and better generalization to unseen surgical scenarios.
-- Validate performance gains through comprehensive testing on existing laparoscopic video datasets and, if possible, real clinical data.
-- Document and demonstrate the effectiveness of the synthetic augmentation pipeline and domain adaptation methods through final presentations and code repositories.
+#### View research on [Github Page](https://simeonallmendinger.github.io/SyntheticImageGeneration//)
 
-## Success Metrics
-The success of the project will be measured based on the following criteria:
-- **Model Accuracy Improvement**: Demonstrate at least a 10% absolute gain in IOU, Dice score, or relevant metric compared to a baseline model trained on real data only.
-- **Generalization to Unseen Data**: Show consistent performance across multiple datasets or different surgical procedures with limited performance degradation.
-- **Data Augmentation Efficacy**: Evaluate the quality and diversity of generated images, ensuring that synthetic samples positively impact training without introducing artifacts.
-- **Real-time or Near Real-time Processing**: Maintain an inference speed of ≤ 30 ms/frame for organ prediction tasks.
-- **Robust Documentation and Code Quality**: Provide thorough documentation enabling future researchers or clinicians to reproduce and extend the work.
+<div class="row"></div>
 
-## Dataset
-We have downloaded the Cholecseg8k dataset from Kaggle for initial testing:
-- [Cholecseg8k Dataset](https://www.kaggle.com/datasets/newslab/cholecseg8k)
+This repository is the code base used for our research. Please follow the guide:
 
-## GPU Access
-Access to the GPU for training and experimentation has been set up using the following guide:
-- [Lab GPU Server Setup](https://github.com/SLUVisLab/lab-wiki/wiki/%F0%9F%93%9F-Lab-GPU-Server-Setup)
+## Clone Repository
 
-## Data Upload
-1. We have uploaded the dataset(.zip) to the GPU server. Use the following generic `rsync` command format:
-```bash
-rsync -avz --progress <path/to/dataset.zip> <username>@<gpu_server>:<path/to/directory/where/you/want/to/upload>
 ```
-2. After uploading, the dataset can be unzipped on the server using:
-```bash
-unzip <dataset.zip> -d <path/to/directory/where/you/want/to/unzip>
+git clone https://github.com/SimeonAllmendinger/SyntheticImageGeneration.git
+cd SyntheticImageGeneration
 ```
-## BaseLine Segmentation Model
-We initially employed the U-Net architecture to establish baseline performance metrics on the laparoscopic dataset. Although the model delivered solid results, we observed considerable slowdowns during training—even when utilizing GPU3. These performance bottlenecks led us to explore more efficient alternatives, ultimately prompting a switch to YOLOv11, a newer and more optimized model. Given its recent release, we consulted the official Ultralytics YOLOv11 documentation to ensure our dataset was formatted correctly for compatibility to the model.
 
-## Diffusion model for Synthetic image generation
-  - We used the [SyntheticImageGeneration repository](https://github.com/SimeonAllmendinger/SyntheticImageGeneration) to generate synthetic laparoscopic images using pre-trained and custom diffusion models. These synthetic frames enhance training data diversity and improve downstream model generalization.
-  - This implementation is based on the research paper
-      - [Synthetic Image Generation with Score-Based Diffusion Models](https://arxiv.org/pdf/2312.03043)
+## Virtual Environment
+To set up a virtual environment, follow these steps:
+1. Create a virtual environment with python version 3.9:
 
-### Augmentation Workflow
-  - Synthetic frames were generated using the model and scripts provided in the repository.
+```
+virtualenv venv -p $(which python3.9)
+```
+
+2. Activate the virtual environment:
+
+```
+source venv/bin/activate
+```
+
+3. Install the required packages:
+
+```
+pip install --no-cache-dir -r requirements.txt
+```
+
+## Download Model Weights
+To test the generation of laparoscopic images with the Elucidated Imagen model, please do the following:
+```
+cd src/assets/
+gdown --folder https://drive.google.com/drive/folders/1np4BON_jbQ1-15nVdgMCP1VKSbKS3h2M
+gdown --folder https://drive.google.com/drive/folders/1BNdUmmqN18K4_lH0BMk0bwRkiy8Sv6D-
+gdown --folder https://drive.google.com/drive/folders/1Y0yQmP3THRzP8UFlAyMFHYUymTUu7ZUu
+cd ../../
+```
+
+## Testing
+To test the generation of laparoscopic images with the pre-trained Elucidated Imagen model, please do the following:
+```
+python3 src/components/test.py --model=ElucidatedImagen --text='grasper grasp gallbladder in callot triangle dissection' --cond_scale=3
+```
+
+You can apply the Imagen and Elucidated Imagen model, various conditiong scales and a suitable text prompt according to your desire! Feel free to try everything out. (The sampling of the Elucidated Imagen model also works well on a machine without GPU).
+
+The hyperparameter configurations of the diffusion-based models are contained in the config file respectively ([Model Config Folder](https://github.com/SimeonAllmendinger/SyntheticImageGeneration/tree/main/configs/models)). Their weights can be found in the table:
+
+| Model             | Training Dataset          |    Link                           |
+| ---               | ---                       | ---                               |
+| Dall-e2 Prior     | CholecT45                 |  [Dalle2_Prior_T45](https://drive.google.com/file/d/17hUYgOPMuIA7twX7IcWAjlMAdwkTPPVo/view?usp=share_link)  |
+| Dall-e2 Decoder   | CholecT45                 |  [Dalle2_Decoder_T45](https://drive.google.com/file/d/1zy2oiSGlXTxPtjIbM1_QV1_Qi8f3QgZK/view?usp=share_link)  |
+| Imagen            | CholecT45                 |  [Imagen_T45](https://drive.google.com/file/d/1Nk_Pskv5lphDzERDPyaafyl4Hf_597S0/view?usp=share_link)  |
+| Imagen            | CholecT45 + CholecSeg8k   |  [Imagen_T45_Seg8k](https://drive.google.com/file/d/1myQYlwYWlmnxIvJHkI_tSAQ2yQuXIk7j/view?usp=share_link)  |
+| Elucidated Imagen | CholecT45                 |  [ElucidatedImagen_T45](https://drive.google.com/file/d/1RVHM3jzsMtqRNwuyU2Wi9RExtIYlwDVp/view?usp=share_link)  |
+| Elucidated Imagen | CholecT45 + CholecSeg8k   |  [ElucidatedImagen_T45_Seg8k](https://drive.google.com/file/d/1EdFsQB0RYvVUvonan16RKgIzDoSr3NiK/view?usp=share_link)  |
 
 
+## Results
+Before running the code for training, tuning and extensive testing purposes, please create a directory to store the results:
+
+```
+mkdir results
+cd results
+mkdir rendevouz
+mkdir testing
+mkdir training
+mkdir TSNE
+mkdir tuning
+```
+
+## Data
+### git LFS
+
+Install git LFS with homebrew: https://brew.sh/index_de
+```
+brew install git-lfs
+git lfs install
+git lfs track "*.pt"
+git add .gitattributes
+```
+
+### Download
+To download the required datasets (CholecT45, CholecSeg8k, CholecT50, Cholec80), follow these steps:
+1. Create a directory to store the data:
+
+```
+cd
+cd SyntheticImageGeneration
+mkdir data
+cd data
+```
+
+2. Download the datasets into this directory after successful registration: 
+-   Cholec80: https://docs.google.com/forms/d/1GwZFM3-GhEduBs1d5QzbfFksKmS1OqXZAz8keYi-wKI
+-   CholecT45: https://forms.gle/jTdPJnZCmSe2Daw7A
+-   CholecSeg8k: https://www.kaggle.com/datasets/newslab/cholecseg8k/download?datasetVersionNumber=11
+-   CholecT50: https://forms.gle/GbMj8TwNoNpMUJuv9
+
+### Preparation
+To enable dashboards please copy your configs of neptune.ai and wandb.ai in the according .yaml file:
+
+```
+cd
+cd SyntheticImageGeneration/configs/visualization/
+touch config_neptune.yaml
+touch config_wandb.yaml
+```
+
+1. Neptune.ai (https://neptune.ai):
+Insert your acceess configs in the file config_neptune.yaml 
+```
+project: "your-project-name" 
+api_token: "your-api-token"
+```
+2. Weights&Biases:
+Insert your access configs in the file config_neptune.yaml 
+```
+project: "your-project-name" 
+api_key: "your-api-key"
+```
+
+To prepare the data for the experiments, run the following script:
+```
+cd SyntheticImageGeneration
+./scripts/run_data_preparation.sh
+```
+
+Now, you are prepared to explore the code base in full extense!
+
+
+## Rendezvouz ([GitHub](https://github.com/CAMMA-public/rendezvous))
+
+In the following, we provide trained rendezvous model weights from the 3-fold cross-validation for various proportions of generated samples:
+
+| Model   | %2 samples | %5 samples  | %10 samples | %20 samples | %25 samples |
+| --- | --- | --- | --- | --- | --- |
+| I5-RDV  | [Weights](https://drive.google.com/file/d/1LC7OTJMVn_lPy1pucmHMnkRCz1BNnTBI/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1rDyXPNh8vgj4yJwXotEGMNCYfOwVV9z6/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1yqxXXb4-OfWJ4QniyZSJJgG_nyqMrsfy/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1Cas_dBBBCqYOmzJacH_toFQqhSu_Naum/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1a6STIJThlRYqIAgHRnbZACiceVrBMlPS/view?usp=share_link) |
+| EI5-RDV | [Weights](https://drive.google.com/file/d/1LC7OTJMVn_lPy1pucmHMnkRCz1BNnTBI/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1Miqj6ZPjqCLvuPjXEe9xgUuB3bQnLMC6/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1bNSahBYI1AdATPypjQ3_Xht03pawGBRR/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1bNSahBYI1AdATPypjQ3_Xht03pawGBRR/view?usp=share_link) | [Weights](https://drive.google.com/file/d/1Cas_dBBBCqYOmzJacH_toFQqhSu_Naum/view?usp=share_link) |
+
+
+# Acknowledgements
+
+We acknowledge support by the state of Baden-Württemberg through bwHPC.
