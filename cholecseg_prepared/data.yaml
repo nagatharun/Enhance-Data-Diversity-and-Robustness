@@ -1,1 +1,21 @@
 #data.yaml code for yolo 
+path: cholecseg_prepared #base where all the data is(raw images, raw masks, images/train,images/val,images/test and labels/val,labels/train and labels/test)
+train: images/train
+val: images/val
+test: images/test
+
+nc: 13 #number of classes
+names: #class names 
+  - Black Background
+  - Abdominal Wall
+  - Liver
+  - Gastrointestinal Tract
+  - Fat
+  - Grasper
+  - Connective Tissue
+  - Blood
+  - Cystic Duct
+  - L-hook Electrocautery
+  - Gallbladder
+  - Hepatic Vein
+  - Liver Ligament
