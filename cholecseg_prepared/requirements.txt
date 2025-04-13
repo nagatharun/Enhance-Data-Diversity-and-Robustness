@@ -1,1 +1,9 @@
 #enter requirements here
+ultralytics==8.3.103
+torch==2.6.0
+matplotlib
+numpy
+tqdm
+opencv-python
+pyyaml
+pandas
