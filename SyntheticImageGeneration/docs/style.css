@@ -1,0 +1,58 @@
+/* Style Sheet of Github Page*/
+
+.row {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+figure {
+  margin: 0;
+  margin-right: 20px;
+  margin-bottom: 20px;
+
+  width: 200px;
+  height: 500px;
+  /*background: white;*/
+}
+
+figcaption {
+    font-style: italic;
+    text-align: center;
+    font-size: 1em;
+}
+
+code { 
+    background: hsl(220, 80%, 90%); 
+}
+
+pre {
+    white-space: pre-wrap;
+    background: hsl(30,80%,90%);
+}
+
+h1 {
+    text-align: center;
+    font-size: 18;
+}
+
+h2 {
+    text-align: left;
+    color: grey;
+    font-size: 14;
+}
+
+h3 {
+    text-align: center;
+    color: rgb(16, 66, 204);
+    font-size: 14;
+}
+
+h4 {
+    text-align: center;
+    color: lightgrey;
+    font-size: 10;
+}
+
